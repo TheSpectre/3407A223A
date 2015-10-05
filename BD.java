@@ -47,7 +47,10 @@ public class BD {
                    " RESPONSABLE           INT, " +
                    " BLOQUES           INT, " +
                    " DESCRIPCION            TEXT, " + 
-                   " CORREO        CHAR(50))";
+                   " RECURSO            INT,"+ 
+                   " FOREIGN KEY(RESPONSABLE) REFERENCES PERSONA(ID),"+
+                   " FOREIGN KEY(BLOQUES) REFERENCES BLOQUES(ID),"+
+                   " FOREIGN KEY(RECURSO) REFERENCES RECURSO(ID)";
                    
             stmt.executeUpdate(sql);
             stmt.executeUpdate(sql1);
