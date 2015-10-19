@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author Spectre
+ * @author BD Team
  */
 public class BD {
 
@@ -31,7 +31,7 @@ public class BD {
                    "(ID INT PRIMARY KEY    NOT NULL," +
                    " NOMBRE           TEXT    NOT NULL, " + 
                    " TELEFONO            TEXT, " + 
-                   " CORREO        TEXT)";
+                   " CORREO        TEXT);";
             String sql1= "CREATE TABLE BLOQUE " +
                    "(ID INT PRIMARY KEY      NOT NULL," +
                    " TIMESTAMP_INICIO           DATETIME    NOT NULL, " + 
@@ -40,8 +40,18 @@ public class BD {
                    "(ID INT PRIMARY KEY      NOT NULL," +
                    " NOMBRE           TEXT    NOT NULL, " + 
                    " DESCRIPCION            TEXT, " + 
-                   " TIPO_RECURSO        TEXT)";
-            String sql3 = "CREATE TABLE EVENTO " +
+                   " TIPO_RECURSO        TEXT);";
+            String sql3 = "CREATE TABLE R_EVE_BLOQ " +
+                   "(FK_ID_EVENTO INT      NOT NULL," +
+                   " FK_ID_BLOQUE INT    NOT NULL, " + 
+                   " FOREIGN KEY(FK_ID_EVENTO) REFERENCES EVENTO(ID),"+
+                   " FOREIGN KEY(FK_ID_BLOQUE) REFERENCES BLOQUE(ID));";
+            String sql4 = "CREATE TABLE R_EVE_REC " +
+                   "(FK_ID_EVENTO INT      NOT NULL," +
+                   " FK_ID_RECURSO INT    NOT NULL, " + 
+                   " FOREIGN KEY(FK_ID_EVENTO) REFERENCES EVENTO(ID),"+
+                   " FOREIGN KEY(FK_ID_RECURSO) REFERENCES RECURSO(ID));";
+            String sql5 = "CREATE TABLE EVENTO " +
                    "(ID INT PRIMARY KEY      NOT NULL," +
                    " NOMBRE           TEXT    NOT NULL, " + 
                    " RESPONSABLE           INT, " +
@@ -49,13 +59,15 @@ public class BD {
                    " DESCRIPCION            TEXT, " + 
                    " RECURSO            INT,"+ 
                    " FOREIGN KEY(RESPONSABLE) REFERENCES PERSONA(ID),"+
-                   " FOREIGN KEY(BLOQUES) REFERENCES BLOQUES(ID),"+
-                   " FOREIGN KEY(RECURSO) REFERENCES RECURSO(ID)";
+                   " FOREIGN KEY(BLOQUES) REFERENCES BLOQUE(ID),"+
+                   " FOREIGN KEY(RECURSO) REFERENCES RECURSO(ID));";
                    
             stmt.executeUpdate(sql);
             stmt.executeUpdate(sql1);
             stmt.executeUpdate(sql2);
             stmt.executeUpdate(sql3);
+            stmt.executeUpdate(sql4);
+            stmt.executeUpdate(sql5);
             stmt.close();
             c.close();
         } catch (Exception e) {
@@ -74,7 +86,7 @@ public class BD {
     public static void main(String[] args) {
         String execute = ini();
         System.out.println(execute);
-        //HOLA
+       
     }
     
 }
